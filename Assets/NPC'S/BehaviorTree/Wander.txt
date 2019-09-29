@@ -1,0 +1,42 @@
+tree("Root")
+	parallel
+		repeat mute tree("Sleeping")
+		repeat mute tree("WalkAround")
+
+tree("Sleeping")
+	while SleepCheck
+		sequence
+			Sleeping
+			Wait(50.0)
+			WakeUp
+
+		
+
+tree("WalkAround")
+	while not SleepCheck
+		fallback
+			tree("RunAway")
+			while not PlayerClose(40.0)
+				Sequence
+					PickRandomDestination
+					MoveToDestination
+					WaitRandom(1.0,5.0)
+
+tree("RunAway")
+	fallback
+		while PlayerClose(40.0)
+			fallback
+				tree("Sprint")
+				while SprintCheck(0)
+					sequence
+						RunAway
+						MoveToDestination
+
+tree("Sprint")
+	fallback
+		while SprintCheck(1)
+			sequence
+				Sprint
+				UseStamina
+				MoveToDestination
+				ResetAgent		

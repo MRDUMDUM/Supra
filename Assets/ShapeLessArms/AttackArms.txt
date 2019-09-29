@@ -1,0 +1,43 @@
+tree("Root")
+	parallel
+		repeat mute tree("Attack")
+		while not AttakingMode
+			parallel
+				repeat mute tree("Nothing")
+				repeat mute tree("Rotate")
+				repeat mute tree("Guarding")
+		
+		
+
+tree("Nothing")
+	while not PlayerClose(80.0)
+		Withdraw
+
+tree("Rotate")
+	while not AttakingMode
+		RotateTowardsPlayer
+
+tree("Guarding")
+	while PlayerClose(80.0)
+			parallel
+				Grow
+				sequence
+					mute
+						while not RestoreGuardMode
+							RestoreToGuard
+					Guard
+
+tree("Attack")
+	fallback
+		while AttakingMode
+			sequence
+				mute
+					while not placedOnce 
+						PlaceAttackPoint
+				//mute 
+				//	while not LeanDone
+				LeanBack
+				Leap
+				//WaitRandom(1.0,2.0)
+				ResetAttack
+			
