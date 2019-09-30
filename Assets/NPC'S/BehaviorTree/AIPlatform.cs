@@ -35,11 +35,10 @@ public class AIPlatform : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
-        
-
+      
         if(isSleeping == true)
         {
+
             hitCol.enabled = false;
             ragdollCol.enabled = true;
         }

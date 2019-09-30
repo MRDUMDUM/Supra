@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     //detec ground and slope
     private bool isGrounded; 
-    public float slideFriction = 0.3f; 
+    //public float slideFriction = 0.3f; 
     private Vector3 hitNormal;
 
     protected bool m_Respawning; //is respawning?
@@ -94,8 +94,8 @@ public class PlayerController : MonoBehaviour
         else
         {
 
-            moveDirection.x += (1f - hitNormal.y) * hitNormal.x * (moveSpeed - slideFriction);
-            moveDirection.z += (1f - hitNormal.y) * hitNormal.z * (moveSpeed - slideFriction);
+            //moveDirection.x += (1f - hitNormal.y) * hitNormal.x * (moveSpeed - slideFriction);
+            //moveDirection.z += (1f - hitNormal.y) * hitNormal.z * (moveSpeed - slideFriction);
             switch (currentJump)
             {
                 case 0:

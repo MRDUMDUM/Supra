@@ -48,43 +48,48 @@ public class RayPickUp : MonoBehaviour {
 	{
         
         placementTracker();
-        if (NPC.GetComponent<AIPlatform>().isSleeping == true)
+        if (NPC != null)
         {
-            if (inRange)
+            if (NPC.GetComponent<AIPlatform>().isSleeping == true)
             {
-                if (carrying == false)
+                if (inRange)
                 {
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (carrying == false)
                     {
-                        anim.SetTrigger("PickUp");
-                        Pickup();
-                        carrying = true;
-                        placement.SetActive(true);
-                        //collider.enabled = false;
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            anim.SetTrigger("PickUp");
+                            Pickup();
+                            carrying = true;
+                            placement.SetActive(true);
+                            //collider.enabled = false;
+                        }
                     }
-                }
-                else if (carrying == true && cantPlace == false)
-                {
-                    if (Input.GetKeyDown(KeyCode.E))
+                    else if (carrying == true && cantPlace == false)
                     {
-                        anim.SetTrigger("SetDown");
-                        Drop();
-                        carrying = false;
-                        placement.SetActive(false);
-                        //collider.enabled = true;
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            anim.SetTrigger("SetDown");
+                            Drop();
+                            carrying = false;
+                            placement.SetActive(false);
+                            //collider.enabled = true;
+                        }
                     }
                 }
             }
-        }else
-        {   
-            if(carrying == true){
-                anim.SetTrigger("SetDown");//needs a new animation here
-               // NPC.GetComponent<Collider>().enabled = true;
-                placement.SetActive(false);
-                carrying = false;
-                NPC.transform.parent = null;
+            else
+            {
+                if (carrying == true)
+                {
+                    anim.SetTrigger("SetDown");//needs a new animation here
+                                               // NPC.GetComponent<Collider>().enabled = true;
+                    placement.SetActive(false);
+                    carrying = false;
+                    NPC.transform.parent = null;
+                }
             }
-        }		
+        }
 	}
 
     //picup tranform object onto parent 
