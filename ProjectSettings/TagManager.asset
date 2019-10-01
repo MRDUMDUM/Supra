@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Weapon
+  - Fire
+  - NPC
+  - Water
   layers:
   - Default
   - TransparentFX

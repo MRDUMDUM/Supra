@@ -42,56 +42,99 @@ public class RayPickUp : MonoBehaviour {
         collider = GetComponent<SphereCollider>();
         //NPC.GetComponent<Rigidbody>().useGravity = false;
     }
-	
-	// Update is called once per frame
-	void Update ()
-	{
-        
+
+    // Update is called once per frame
+    void Update()
+    {
+
         placementTracker();
         if (NPC != null)
         {
-            if (NPC.GetComponent<AIPlatform>().isSleeping == true)
+            if (NPC.CompareTag("Fire"))
             {
-                if (inRange)
+                if (NPC.GetComponent<FireNPC>().isSleeping == true)
                 {
-                    if (carrying == false)
+                    if (inRange)
                     {
-                        if (Input.GetKeyDown(KeyCode.E))
+                        if (carrying == false)
                         {
-                            anim.SetTrigger("PickUp");
-                            Pickup();
-                            carrying = true;
-                            placement.SetActive(true);
-                            //collider.enabled = false;
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                anim.SetTrigger("PickUp");
+                                Pickup();
+                                carrying = true;
+                                placement.SetActive(true);
+                            }
                         }
-                    }
-                    else if (carrying == true && cantPlace == false)
-                    {
-                        if (Input.GetKeyDown(KeyCode.E))
+                        else if (carrying == true && cantPlace == false)
                         {
-                            anim.SetTrigger("SetDown");
-                            Drop();
-                            carrying = false;
-                            placement.SetActive(false);
-                            //collider.enabled = true;
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                anim.SetTrigger("SetDown");
+                                Drop();
+                                carrying = false;
+                                placement.SetActive(false);
+                                //collider.enabled = true;
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (carrying == true)
+                else
                 {
-                    anim.SetTrigger("SetDown");//needs a new animation here
-                                               // NPC.GetComponent<Collider>().enabled = true;
-                    placement.SetActive(false);
-                    carrying = false;
-                    NPC.transform.parent = null;
+                    if (carrying == true)
+                    {
+                        anim.SetTrigger("SetDown");//needs a new animation here
+                                                   // NPC.GetComponent<Collider>().enabled = true;
+                        placement.SetActive(false);
+                        carrying = false;
+                        NPC.transform.parent = null;
+                    }
+                }
+            }
+            if (NPC.CompareTag("NPC"))
+            {
+                if (NPC.GetComponent<AIPlatform>().isSleeping == true || NPC.GetComponent<FireNPC>().isSleeping == true)
+                {
+                    if (inRange)
+                    {
+                        if (carrying == false)
+                        {
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                anim.SetTrigger("PickUp");
+                                Pickup();
+                                carrying = true;
+                                placement.SetActive(true);
+                                //collider.enabled = false;
+                            }
+                        }
+                        else if (carrying == true && cantPlace == false)
+                        {
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+                                anim.SetTrigger("SetDown");
+                                Drop();
+                                carrying = false;
+                                placement.SetActive(false);
+                                //collider.enabled = true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (carrying == true)
+                    {
+                        anim.SetTrigger("SetDown");//needs a new animation here
+                                                   // NPC.GetComponent<Collider>().enabled = true;
+                        placement.SetActive(false);
+                        carrying = false;
+                        NPC.transform.parent = null;
+                    }
                 }
             }
         }
-	}
-
+    }
     //picup tranform object onto parent 
     void Pickup()
     {
@@ -189,6 +232,12 @@ public class RayPickUp : MonoBehaviour {
                 inRange = true;
                 Debug.Log("noget sketet");
             }
+            if (COLin.CompareTag("Fire"))
+            {
+                NPC = COLin.transform.root.gameObject;
+                inRange = true;
+                
+            }
         }
         
     }
@@ -198,6 +247,12 @@ public class RayPickUp : MonoBehaviour {
         if (carrying == false)
         {
             if (COLout.CompareTag("NPC"))
+            {
+                NPC = null;
+                inRange = false;
+                Debug.Log("out!");
+            }
+            if (COLout.CompareTag("Fire"))
             {
                 NPC = null;
                 inRange = false;
