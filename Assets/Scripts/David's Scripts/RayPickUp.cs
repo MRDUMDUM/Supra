@@ -12,13 +12,17 @@ public class RayPickUp : MonoBehaviour {
 	public Component startPos;
 	public Component endPos;
     public Component pickupPos;
+    public Component ElementPickup;
 
     //placemarker
 	public GameObject placement;
     public GameObject placementDinaler;
     public GameObject PlayerCharecter;
+    public GameObject PlayerHand;
 
-    private GameObject NPC; 
+
+    private GameObject Platform;
+    private GameObject Element;
 
     Vector3 placeAt;
 	Vector3 PlaceStart;
@@ -33,11 +37,12 @@ public class RayPickUp : MonoBehaviour {
     bool carrying;
     bool cantPlace;
     bool wall = false;
+    bool aiming = false;
 
 
     // Use this for initialization
     void Start () {
-
+        
         //NPC = GameObject.FindGameObjectWithTag("NPC");
         collider = GetComponent<SphereCollider>();
         //NPC.GetComponent<Rigidbody>().useGravity = false;
@@ -47,12 +52,13 @@ public class RayPickUp : MonoBehaviour {
     void Update()
     {
 
-        placementTracker();
-        if (NPC != null)
+        
+        if (Platform != null)
         {
-            if (NPC.CompareTag("Fire"))
+            placementTracker();
+            if (Platform.CompareTag("Fire"))
             {
-                if (NPC.GetComponent<FireNPC>().isSleeping == true)
+                if (Platform.GetComponent<FireNPC>().isSleeping == true)
                 {
                     if (inRange)
                     {
@@ -87,13 +93,13 @@ public class RayPickUp : MonoBehaviour {
                                                    // NPC.GetComponent<Collider>().enabled = true;
                         placement.SetActive(false);
                         carrying = false;
-                        NPC.transform.parent = null;
+                        Platform.transform.parent = null;
                     }
                 }
             }
-            if (NPC.CompareTag("NPC"))
+            if (Platform.CompareTag("NPC"))
             {
-                if (NPC.GetComponent<AIPlatform>().isSleeping == true || NPC.GetComponent<FireNPC>().isSleeping == true)
+                if (Platform.GetComponent<AIPlatform>().isSleeping == true || Platform.GetComponent<FireNPC>().isSleeping == true)
                 {
                     if (inRange)
                     {
@@ -129,7 +135,54 @@ public class RayPickUp : MonoBehaviour {
                                                    // NPC.GetComponent<Collider>().enabled = true;
                         placement.SetActive(false);
                         carrying = false;
-                        NPC.transform.parent = null;
+                        Platform.transform.parent = null;
+                    }
+                }
+            }
+        }
+
+        if(Element != null)
+        {
+            if (inRange)
+            {
+                if (carrying == false)
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        anim.SetTrigger("PickUp");
+                        PickUpElement();
+                        carrying = true;
+                        //placement.SetActive(true);
+                    }
+                }
+                else if (carrying == true)
+                {
+                    Debug.Log("Carring true");
+                    //Toggles between aiming and throwing
+                    if (!aiming)
+                    {
+                        if(Input.GetMouseButtonDown(0))
+                        {
+                            AimElement();
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            ThrowElement();
+                        }
+                    }
+                    
+                    
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        anim.SetTrigger("SetDown");
+                        DropElement();
+                        aiming = false;
+                        carrying = false;
+                        //placement.SetActive(false);
+                        //collider.enabled = true;
                     }
                 }
             }
@@ -138,23 +191,54 @@ public class RayPickUp : MonoBehaviour {
     //picup tranform object onto parent 
     void Pickup()
     {
-        NPC.GetComponent<Rigidbody>().useGravity = false;
-        NPC.GetComponent<Rigidbody>().isKinematic = true;
+        Platform.GetComponent<Rigidbody>().useGravity = false;
+        Platform.GetComponent<Rigidbody>().isKinematic = true;
         //NPC.GetComponent<Collider>().enabled = false;
-        NPC.transform.position = liftOffset; // lifter.transform.position;
-        NPC.transform.rotation = PlayerCharecter.transform.rotation;
-        NPC.transform.parent = PlayerCharecter.transform;
+        Platform.transform.position = liftOffset; // lifter.transform.position;
+        Platform.transform.rotation = PlayerCharecter.transform.rotation;
+        Platform.transform.parent = PlayerCharecter.transform;
         
     }
 
     void Drop()
     {
-        NPC.GetComponent<Rigidbody>().useGravity = true;
-        NPC.GetComponent<Rigidbody>().isKinematic = false;
+        Platform.GetComponent<Rigidbody>().useGravity = true;
+        Platform.GetComponent<Rigidbody>().isKinematic = false;
        // NPC.GetComponent<Collider>().enabled = true;
-        NPC.transform.parent = null;
-        NPC.transform.position = placeAt;
-        NPC.transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        Platform.transform.parent = null;
+        Platform.transform.position = placeAt;
+        Platform.transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+    }
+
+    void PickUpElement()
+    {
+        Element.GetComponent<Rigidbody>().useGravity = false;
+        Element.GetComponent<Rigidbody>().isKinematic = true;
+        
+        Element.transform.parent = PlayerHand.transform;
+        
+        Element.transform.position = ElementPickup.transform.position;
+        
+    }
+
+    void DropElement()
+    {
+        Element.transform.parent = null;
+        Element.GetComponent<Rigidbody>().useGravity = true;
+        Element.GetComponent<Rigidbody>().isKinematic = false;
+    }
+
+    void AimElement()
+    {
+        aiming = true;
+        
+        Debug.Log("TAke AIM!!");
+    }
+
+    void ThrowElement()
+    {
+        aiming = false;
+        Debug.Log("YEEEET");
     }
 
     void placementTracker()
@@ -220,23 +304,31 @@ public class RayPickUp : MonoBehaviour {
         }
     }
 
+    
+
     //stores object colliding with player pickup colider
     void OnTriggerStay(Collider COLin)
     {
-        if (NPC == null && carrying == false)
+        if (Platform == null && Element == null && carrying == false )
         {
-            if (COLin.CompareTag("NPC"))
+            if (COLin.gameObject.layer == LayerMask.NameToLayer("Platform"))
             {
-                NPC = COLin.transform.root.gameObject;
+                Platform = COLin.transform.root.gameObject;
                // NPC = COLin.gameObject;
                 inRange = true;
                 Debug.Log("noget sketet");
             }
             if (COLin.CompareTag("Fire"))
             {
-                NPC = COLin.transform.root.gameObject;
+                Platform = COLin.transform.root.gameObject;
                 inRange = true;
                 
+            }
+            if (COLin.gameObject.layer == LayerMask.NameToLayer("Element"))
+            {
+                Element = COLin.transform.root.gameObject;
+                inRange = true;
+                Debug.Log("tag mig!");
             }
         }
         
@@ -246,17 +338,22 @@ public class RayPickUp : MonoBehaviour {
     {
         if (carrying == false)
         {
-            if (COLout.CompareTag("NPC"))
+            if (COLout.gameObject.layer == LayerMask.NameToLayer("Platform"))
             {
-                NPC = null;
+                Platform = null;
                 inRange = false;
                 Debug.Log("out!");
             }
             if (COLout.CompareTag("Fire"))
             {
-                NPC = null;
+                Platform = null;
                 inRange = false;
                 Debug.Log("out!");
+            }
+            if (COLout.gameObject.layer == LayerMask.NameToLayer("Element"))
+            {
+                Element = null;
+                inRange = false;
             }
         }
     }

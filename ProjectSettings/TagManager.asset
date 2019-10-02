@@ -8,6 +8,8 @@ TagManager:
   - Fire
   - NPC
   - Water
+  - Element
+  - Frost
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - 
   - 
   - Player
-  - 
-  - 
+  - Platform
+  - Element
   - 
   - 
   - 
