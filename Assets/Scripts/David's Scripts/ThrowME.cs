@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ThrowME : MonoBehaviour
 {
+    public LineRenderer throwLine;
+
     public Rigidbody body;
     public Transform target;
     public float velocity;
@@ -12,12 +14,9 @@ public class ThrowME : MonoBehaviour
 
     public bool debugPath;
     
-    //public float angle;
-   // public int resolution;
-    
-    //float radianAngle;
-    LineRenderer throwLine;
-    // Start is called before the first frame update
+
+
+
     void Start()
     {
         body = GetComponent<Rigidbody>();
@@ -76,6 +75,8 @@ public class ThrowME : MonoBehaviour
 
             //throwLine.SetPosition(i, )
             Debug.DrawLine(previousDrawPoint, drawPoint, Color.cyan);
+            throwLine.SetVertexCount(resolution);
+
             previousDrawPoint = drawPoint;
         }
     }
