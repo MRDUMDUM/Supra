@@ -10,6 +10,7 @@ TagManager:
   - Water
   - Element
   - Frost
+  - Electric
   layers:
   - Default
   - TransparentFX
