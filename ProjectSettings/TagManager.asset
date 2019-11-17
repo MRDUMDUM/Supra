@@ -9,8 +9,8 @@ TagManager:
   - NPC
   - Water
   - Element
-  - Ice
-  - Electro
+  - Frost
+  - Electric
   layers:
   - Default
   - TransparentFX
