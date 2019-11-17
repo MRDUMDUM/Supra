@@ -4,100 +4,169 @@ using UnityEngine;
 
 public class ThrowME : MonoBehaviour
 {
-    public LineRenderer throwLine;
-
-    public Rigidbody body;
+    public LineRenderer lineRenderer;
     public Transform target;
-    public float velocity;
-    public float h;
-    public float gravity; // force of gravity on the y direction
+    public GameObject targetObject;
+    public float fireAngle = 45f;
+    public float gravity = 9.8f;
 
-    public bool debugPath;
-    
+    public Transform ball = null;
+    private Transform StartPosition;
 
+    public Transform point1, point2,resetPoint1, point3,resetPoint2;
+    private int numPoints = 50;
+    private Vector3[] positions = new Vector3[51];
 
+    private Vector3 placeTargetPoint;
 
-    void Start()
+    public LayerMask layerMask;
+
+    public static bool canThrow = false;
+
+    public static int elementIndicator;
+
+    [Header("All Element Prefabs")]
+    public GameObject fire;
+    public GameObject water;
+    public GameObject ice;
+    public GameObject electro;
+
+    private void Awake()
     {
-        body = GetComponent<Rigidbody>();
-        throwLine = this.GetComponent<LineRenderer>();
-        //gravity = Mathf.Abs(Physics.gravity.y)*(-1);
+        // StartPosition = transform;
+        lineRenderer.positionCount = numPoints;
+    }
+
+    private void Update()
+    {
+        if (canThrow)
+        {
+            DrawCurve();
+            RaycastCurver();
+            this.gameObject.GetComponent<LineRenderer>().enabled = true;
+            targetObject.SetActive(true);
+        }
+        else
+        {
+            this.gameObject.GetComponent<LineRenderer>().enabled = false;
+            targetObject.SetActive(false);
+        }
         
-        body.useGravity = false;
-        Debug.Log("Gravity" + gravity);
     }
 
-    // Update is called once per frame
-    void Update()
+    void RaycastCurver()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        RaycastHit hit1;
+        RaycastHit hit2;
+
+        if (Physics.Raycast(point1.position, point2.position-point1.position, out hit1, 40, layerMask))
         {
-            Launch();
+            placeTargetPoint = hit1.point;
+            target.position = placeTargetPoint;
+            point2.position = placeTargetPoint;
+            point3.position = placeTargetPoint;
+            target.rotation = Quaternion.FromToRotation(transform.up, hit1.normal) * transform.rotation;
+        }
+        else
+        {
+            point2.position = point1.position + (resetPoint1.position - point1.position);
+            point3.position = point2.position + (resetPoint2.position - point2.position);
+
+            if (Physics.Raycast(point2.position, point3.position-point2.position, out hit2, 50, layerMask))
+            {
+                placeTargetPoint = hit2.point;
+                target.position = placeTargetPoint;
+                point3.position = placeTargetPoint;
+                target.rotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
+            }
         }
 
-        if (debugPath)
-        {
-            DrawPath();
-        }
+
+        Debug.DrawRay(point1.position, (point2.position-point1.position), Color.red);
+        Debug.DrawRay(point2.position, (point3.position-point2.position), Color.red);
     }
 
-    void Launch()
+
+    private void DrawCurve()
     {
-        body.isKinematic = false;
-        body.useGravity = true;
-        body.velocity = CalculateLaunchData().initialVelocity;
+        for(int i = 1; i < numPoints + 1; i++)
+        {
+            float t = i / (float)numPoints;
+            positions[i - 1] = CalculatCurv(t, point1.position, point2.position, point3.position);
+        }
+        lineRenderer.SetPositions(positions);
+    }
+
+    private Vector3 CalculatCurv(float t, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        // (1-t)2 p1+2(1-t)tp2 + t2p3
+        //   u          u
+        // uu * p0 + 2 * u * t * p1 + tt * p2 
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        Vector3 p = uu * p1;
+        p += 2 * u * t * p2;
+        p += tt * p3;
+        return p;
         
     }
+
+    public void ElementToThrow()
+    {
+        switch (elementIndicator)
+        {
+            case 0:
+                GameObject fireElement = Instantiate(fire, point1.position, Quaternion.identity) as GameObject;
+                ball = fireElement.transform;
+                break;
+            case 1:
+                GameObject waterElement = Instantiate(water, point1.position, Quaternion.identity) as GameObject;
+                ball = waterElement.transform;
+                break;
+            case 2:
+                GameObject iceElement = Instantiate(ice, point1.position, Quaternion.identity) as GameObject;
+                ball = iceElement.transform;
+                break;
+            case 3:
+                GameObject electroElement = Instantiate(electro, point1.position, Quaternion.identity) as GameObject;
+                ball = electroElement.transform;
+                break;
+
+        }
+    }
+
     
-    LaunchData CalculateLaunchData()
+    public IEnumerator SimulateBallCurv()
     {
-        float displacementY = target.position.y - body.position.y;
-        Vector3 displacementXZ = new Vector3(target.position.x - body.position.x, 0, target.position.z - body.position.z);
-        float time = Mathf.Sqrt(-2 * gravity) + Mathf.Sqrt(2 * (displacementY - h) / gravity);
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * h);
-        Vector3 velocityXZ = displacementXZ * velocity / time;
+        ElementToThrow();
+        ball.position = point1.position;
+        
+        float targetDistance = Vector3.Distance(ball.position, target.position);
 
-        return new LaunchData (velocityXZ + velocityY,time);
-    }
+        // Calculate the velocity needed to throw the object to the target at specified angle.
+        float ballVelocity = targetDistance / (Mathf.Sin(2 * fireAngle * Mathf.Deg2Rad) / gravity);
 
-    void DrawPath()
-    {
-        LaunchData launchData = CalculateLaunchData();
-        Vector3 previousDrawPoint = body.position;
+        //X and y Component of the velocity
+        float Vx = Mathf.Sqrt(ballVelocity) * Mathf.Cos(fireAngle * Mathf.Deg2Rad);
+        float Vy = Mathf.Sqrt(ballVelocity) * Mathf.Sin(fireAngle * Mathf.Deg2Rad);
 
-        int resolution = 30;
+        //flight time
+        float flightDuration = targetDistance / Vx;
 
-        for(int i = 1; i<=resolution;i++)
+        //Rotate towards the target
+        ball.rotation = Quaternion.LookRotation(target.position - ball.position);
+
+        float elapseTime = 0;
+
+        while (elapseTime < flightDuration)
         {
-            float simulationTime = i / (float)resolution * launchData.timeToTarget;
-            Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
-            Vector3 drawPoint = body.position + displacement;
+            ball.Translate(0f, (Vy - (gravity * elapseTime))* Time.deltaTime, Vx * Time.deltaTime);
 
-            //throwLine.SetPosition(i, )
-            Debug.DrawLine(previousDrawPoint, drawPoint, Color.cyan);
-            throwLine.SetVertexCount(resolution);
-
-            previousDrawPoint = drawPoint;
+            elapseTime += Time.deltaTime;
+            yield return null;
         }
+        
     }
 
-    struct LaunchData
-    {
-        public readonly Vector3 initialVelocity;
-        public readonly float timeToTarget;
-
-        public LaunchData(Vector3 initialVelocity, float timeToTarget)
-        {
-            this.initialVelocity = initialVelocity;
-            this.timeToTarget = timeToTarget;
-        }
-    }
-
-    // skal ogsp slettets!
-    //Vector3 CalculatePoint(float t, float maxDistance)
-    //{
-    //    float x = t * maxDistance;
-    //    float y = x * Mathf.Tan(radianAngle) * ((gravity * x * x) / (2 * velocity * velocity * Mathf.Cos(radianAngle) * Mathf.Cos(radianAngle)));
-    //    return new Vector3(x, y);
-    //}
 }

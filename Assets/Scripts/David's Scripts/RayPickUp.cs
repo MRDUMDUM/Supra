@@ -19,6 +19,7 @@ public class RayPickUp : MonoBehaviour {
     public GameObject placementDinaler;
     public GameObject PlayerCharecter;
     public GameObject PlayerHand;
+    public GameObject throwMe;
 
 
     private GameObject Platform;
@@ -153,6 +154,7 @@ public class RayPickUp : MonoBehaviour {
                         PickUpElement();
                         carrying = true;
                         //placement.SetActive(true);
+                        
                     }
                 }
                 else if (carrying == true)
@@ -172,6 +174,9 @@ public class RayPickUp : MonoBehaviour {
                         {
                             ThrowElement();
                         }
+
+                        //if(Input.GetButtonDown)
+
                     }
                     
                     
@@ -204,7 +209,7 @@ public class RayPickUp : MonoBehaviour {
     {
         Platform.GetComponent<Rigidbody>().useGravity = true;
         Platform.GetComponent<Rigidbody>().isKinematic = false;
-       // NPC.GetComponent<Collider>().enabled = true;
+        // NPC.GetComponent<Collider>().enabled = true;
         Platform.transform.parent = null;
         Platform.transform.position = placeAt;
         Platform.transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
@@ -212,9 +217,26 @@ public class RayPickUp : MonoBehaviour {
 
     void PickUpElement()
     {
-        Element.GetComponent<Rigidbody>().useGravity = false;
-        Element.GetComponent<Rigidbody>().isKinematic = true;
-        
+        //Element.GetComponent<Rigidbody>().useGravity = false;
+        //Element.GetComponent<Rigidbody>().isKinematic = true;
+
+        if (Element.CompareTag("Fire"))
+        {
+            ThrowME.elementIndicator = 0;
+        }
+        if (Element.CompareTag("Water"))
+        {
+            ThrowME.elementIndicator = 1;
+        }
+        if (Element.CompareTag("Ice"))
+        {
+            ThrowME.elementIndicator = 2;
+        }
+        if (Element.CompareTag("Electro"))
+        {
+            ThrowME.elementIndicator = 3;
+        }
+
         Element.transform.parent = PlayerHand.transform;
         
         Element.transform.position = ElementPickup.transform.position;
@@ -224,20 +246,30 @@ public class RayPickUp : MonoBehaviour {
     void DropElement()
     {
         Element.transform.parent = null;
-        Element.GetComponent<Rigidbody>().useGravity = true;
-        Element.GetComponent<Rigidbody>().isKinematic = false;
+        PlayerController.aming = false;
+        //Element.GetComponent<Rigidbody>().useGravity = true;
+        //Element.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     void AimElement()
     {
         aiming = true;
-        
+        //throwMe.SetActive(true);
+        PlayerController.aming = true;
+        ThrowME.canThrow = true;
         Debug.Log("TAke AIM!!");
     }
 
     void ThrowElement()
     {
+        anim.SetTrigger("SetDown");
+        Destroy(Element);
+        StartCoroutine(throwMe.GetComponent<ThrowME>().SimulateBallCurv());
+        //throwMe.SetActive(false);
+        ThrowME.canThrow = false;
+        PlayerController.aming = false;
         aiming = false;
+        carrying = false;
         Debug.Log("YEEEET");
     }
 
@@ -316,19 +348,14 @@ public class RayPickUp : MonoBehaviour {
                 Platform = COLin.transform.root.gameObject;
                // NPC = COLin.gameObject;
                 inRange = true;
-                Debug.Log("noget sketet");
-            }
-            if (COLin.CompareTag("Fire"))
-            {
-                Platform = COLin.transform.root.gameObject;
-                inRange = true;
                 
             }
+            
             if (COLin.gameObject.layer == LayerMask.NameToLayer("Element"))
             {
                 Element = COLin.transform.root.gameObject;
                 inRange = true;
-                Debug.Log("tag mig!");
+                
             }
         }
         
@@ -342,14 +369,9 @@ public class RayPickUp : MonoBehaviour {
             {
                 Platform = null;
                 inRange = false;
-                Debug.Log("out!");
+                
             }
-            if (COLout.CompareTag("Fire"))
-            {
-                Platform = null;
-                inRange = false;
-                Debug.Log("out!");
-            }
+           
             if (COLout.gameObject.layer == LayerMask.NameToLayer("Element"))
             {
                 Element = null;

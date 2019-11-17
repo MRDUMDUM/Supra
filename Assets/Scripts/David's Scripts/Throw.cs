@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
-    public float gravity = 10f;
-
-    public GameObject hittingPoint;
+    public Rigidbody Ball;
     public GameObject target;
+    
+    public float h = 25;
+    public float gravity = -18f;
+
+    public LineRenderer lineRenderer;
+    public GameObject hittingPoint;
+    
     
     public float firingAngle = 45.0f;
 
-    public Rigidbody obj;
+    
     
 
     private void Start()
     {
-        obj = this.GetComponent<Rigidbody>();
+        Ball = this.GetComponent<Rigidbody>();
     }
 
 
@@ -37,7 +41,7 @@ public class Throw : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                obj.velocity = Vo;
+                Ball.velocity = Vo;
             }
         }
         else

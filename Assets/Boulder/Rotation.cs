@@ -9,6 +9,11 @@ public class Rotation : MonoBehaviour {
     public bool RotateY = false;
     public bool RotateZ = false;
 
+    [Header("Rotate object on local axis")]
+    public bool localRotateX = false;
+    public bool localRotateY = false;
+    public bool localRotateZ = false;
+
     [Header("Rotate object in an arch")]
     public bool arcRotate = false;
     public bool arcX = false;
@@ -73,6 +78,7 @@ public class Rotation : MonoBehaviour {
             RotatingArch();
         }
 
+        LocalRotation();
 
         //if (RotateX == true)
         //{
@@ -118,5 +124,23 @@ public class Rotation : MonoBehaviour {
 
         }
 
+    }
+
+    void LocalRotation()
+    {
+        if (localRotateX == true)
+        {
+            transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime, Space.Self);
+        }
+
+        if (localRotateY == true)
+        {
+            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+        }
+
+        if (localRotateZ == true)
+        {
+            transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime,Space.Self);
+        }
     }
 }

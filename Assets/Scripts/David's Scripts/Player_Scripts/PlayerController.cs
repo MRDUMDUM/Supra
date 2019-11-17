@@ -11,13 +11,15 @@ public class PlayerController : MonoBehaviour
     public bool respawning { get { return m_Respawning; } }
 
     public float moveSpeed;
+    public float aimSpeedReduction;
 
     public float slopeForce;
     public float slopeForceRayLenght;
 
     public CharacterController controller;
     public float jumpForce;
-    public float gravityScale;
+    public float fallMultiplier;
+    public float lowJumpMultiplier;
 
     private const int maxJump = 2;
     private int currentJump = 0;
@@ -29,10 +31,15 @@ public class PlayerController : MonoBehaviour
     public float rotateSpeed;
     public GameObject playerModel;
 
+    public GameObject WeaponBack;
+    public GameObject WeaponAttack;
+
     //detec ground and slope
     private bool isGrounded; 
     //public float slideFriction = 0.3f; 
     private Vector3 hitNormal;
+
+    public static bool aming = false;
 
     protected bool m_Respawning; //is respawning?
 
@@ -71,11 +78,19 @@ public class PlayerController : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.down * slopeForceRayLenght, Color.yellow);
         // moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
-// Debug.Log("currentJump" + currentJump);
+        // Debug.Log("currentJump" + currentJump);
         float yStore = moveDirection.y;
 
         moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal") );
-        moveDirection = moveDirection.normalized * moveSpeed;
+        if (!aming)
+        {
+            moveDirection = moveDirection.normalized * moveSpeed;
+        }
+        else
+        {
+            moveDirection = moveDirection.normalized * (moveSpeed - aimSpeedReduction);
+        }
+        
         moveDirection.y = yStore;
 
         //isGrounded = Vector3.Angle(Vector3.up, hitNormal) <= controller.slopeLimit;
@@ -93,9 +108,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
-            //moveDirection.x += (1f - hitNormal.y) * hitNormal.x * (moveSpeed - slideFriction);
-            //moveDirection.z += (1f - hitNormal.y) * hitNormal.z * (moveSpeed - slideFriction);
+            
+            //switch statemant ensures that if a player walks over a edge they dont get two jumps but only one jump triggers
             switch (currentJump)
             {
                 case 0:
@@ -123,9 +137,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        // have to rework this so player can hold jump buttom for a soomth jump
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        //if (moveDirection.y < 0 )
+        //{
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * fallMultiplier * Time.deltaTime);
+        //}else if(moveDirection.y > 0 && !Input.GetButton("Jump")){
+        //    moveDirection.y = moveDirection.y + (Physics.gravity.y * lowJumpMultiplier * Time.deltaTime);
+        //}
+
+       
 
 
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
         controller.Move(moveDirection * Time.deltaTime);
 
        if((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && OnSlope())
@@ -136,6 +160,7 @@ public class PlayerController : MonoBehaviour
         //attack
         if (Input.GetMouseButtonDown(0))
         {
+
             anim.SetTrigger("Attack");
         }
 
