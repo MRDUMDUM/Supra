@@ -14,6 +14,14 @@ public class ColliderSpawnArea : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            playerColliding = true;
+        }
+    }
+
     private void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Player")

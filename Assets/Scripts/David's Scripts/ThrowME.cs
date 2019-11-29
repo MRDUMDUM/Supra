@@ -10,7 +10,7 @@ public class ThrowME : MonoBehaviour
     public float fireAngle = 45f;
     public float gravity = 9.8f;
 
-    public Transform ball = null;
+    public static Transform ball = null;
     private Transform StartPosition;
 
     public Transform point1, point2,resetPoint1, point3,resetPoint2;
@@ -161,10 +161,18 @@ public class ThrowME : MonoBehaviour
 
         while (elapseTime < flightDuration)
         {
-            ball.Translate(0f, (Vy - (gravity * elapseTime))* Time.deltaTime, Vx * Time.deltaTime);
+            if(ball == null)
+            {
+                yield return null;
+            }
+            else
+            {
+                ball.Translate(0f, (Vy - (gravity * elapseTime))* Time.deltaTime, Vx * Time.deltaTime);
 
-            elapseTime += Time.deltaTime;
-            yield return null;
+                elapseTime += Time.deltaTime;
+                yield return null;
+            }
+ 
         }
         
     }

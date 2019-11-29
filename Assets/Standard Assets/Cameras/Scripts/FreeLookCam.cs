@@ -31,6 +31,7 @@ namespace UnityStandardAssets.Cameras
         [Header("Aiming valuables")]
         public Vector3 playerOffset;
         public float distanceFromOffset;
+        public Transform rotator;
 
         protected override void Awake()
         {

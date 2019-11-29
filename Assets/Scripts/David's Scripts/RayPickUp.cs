@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RayPickUp : MonoBehaviour {
 
@@ -193,6 +194,7 @@ public class RayPickUp : MonoBehaviour {
             }
         }
     }
+
     //picup tranform object onto parent 
     void Pickup()
     {
@@ -219,7 +221,7 @@ public class RayPickUp : MonoBehaviour {
     {
         //Element.GetComponent<Rigidbody>().useGravity = false;
         //Element.GetComponent<Rigidbody>().isKinematic = true;
-
+        
         if (Element.CompareTag("Fire"))
         {
             ThrowME.elementIndicator = 0;
@@ -232,13 +234,14 @@ public class RayPickUp : MonoBehaviour {
         {
             ThrowME.elementIndicator = 2;
         }
-        if (Element.CompareTag("Electro"))
+        if (Element.CompareTag("Electric"))
         {
             ThrowME.elementIndicator = 3;
         }
-
+        //Element.GetComponent<na>
+        Element.GetComponent<AIControl>().enabled = false;
+        Element.GetComponent<NavMeshAgent>().enabled = false;
         Element.transform.parent = PlayerHand.transform;
-        
         Element.transform.position = ElementPickup.transform.position;
         
     }
@@ -247,8 +250,11 @@ public class RayPickUp : MonoBehaviour {
     {
         Element.transform.parent = null;
         PlayerController.aming = false;
+        Element.GetComponent<AIControl>().enabled = true;
+        Element.GetComponent<NavMeshAgent>().enabled = true;
         //Element.GetComponent<Rigidbody>().useGravity = true;
         //Element.GetComponent<Rigidbody>().isKinematic = false;
+        ThrowME.canThrow = false;
     }
 
     void AimElement()

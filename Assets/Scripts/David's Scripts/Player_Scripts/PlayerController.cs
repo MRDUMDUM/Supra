@@ -164,14 +164,16 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("Attack");
         }
 
-        //Move the player in different direction based on the camera direction
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-        {
-            
-            transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
-            Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
-            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed*Time.deltaTime);
-        }
+        ////Move the player in different direction based on the camera direction
+        //if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        //{
+
+        //    transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
+        //    Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+        //    playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed*Time.deltaTime);
+        //}
+
+        ThirdPersonControl();
 
         anim.SetBool("isGrounded", controller.isGrounded);
         anim.SetFloat("SpeedProcent", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
@@ -182,4 +184,23 @@ public class PlayerController : MonoBehaviour
     //    m_Respawning = false;
     //    m_Damageable.isInvulnerable = false;
     //}
+
+    public void ThirdPersonControl()
+    {
+        //Move the player in different direction based on the camera direction
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+
+            transform.rotation = Quaternion.Euler(0f, pivot.rotation.eulerAngles.y, 0f);
+            Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+            playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+        }
+    }
+
+    public void AimingControl()
+    {
+
+    }
 }
+
+

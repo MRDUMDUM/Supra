@@ -269,8 +269,8 @@ namespace RootMotion.FinalIK
             if(attackT > 1.0f)
             {
                 
-                //attackBendT = 0.0f;
-                //attackT = 0.0f;
+                attackBendT = 0.0f;
+                attackT = 0.0f;
                 Task.current.Succeed();
             }
 

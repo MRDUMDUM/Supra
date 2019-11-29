@@ -11,6 +11,10 @@ TagManager:
   - Element
   - Frost
   - Electric
+  - Electro
+  - Ice
+  - Ground
+  - WaterPuddle
   layers:
   - Default
   - TransparentFX
@@ -23,8 +27,8 @@ TagManager:
   - Player
   - Platform
   - Element
-  - 
-  - 
+  - ThrowElement
+  - SpawnArea
   - 
   - 
   - 

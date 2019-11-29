@@ -15,8 +15,9 @@ public class AIControl : MonoBehaviour {
 
     public float wanderRadius;
     public float wanderTimer;
-
+    public float speed;
     private float timer;
+
 
     void ResetAgent()
     {
@@ -65,14 +66,15 @@ public class AIControl : MonoBehaviour {
             {
                 agent.SetDestination(path.corners[path.corners.Length - 1]);
                 //anim.SetTrigger("isRunning");
-                agent.speed = 60;
-                agent.angularSpeed = 500;
-                agent.acceleration = 100;
+                agent.speed = speed;
+                agent.angularSpeed = 50;
+                agent.acceleration = 60;
             }
 
         }
         else
         {
+            agent.speed = 5f;
             agent.angularSpeed = 120;
             agent.acceleration = 10;
 
