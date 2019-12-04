@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    public GameObject respawnPoint;
+    
     public int maxHealth;
     public int currentHealth;
 
@@ -18,7 +18,8 @@ public class HealthManager : MonoBehaviour
     public float flashLength = 0.1f;
 
     private bool isRespawning;
-    private Vector3 respawnPoint;
+    public Vector3 respawnPoint;
+    public Quaternion respawnRotation;
     public float respawnlegth;
 
     // Start is called before the first frame update
@@ -48,7 +49,7 @@ public class HealthManager : MonoBehaviour
 
             if(invincibilityCounter <= 0)
             {
-                respawn();
+                Respawn();
                 playerRenderer.enabled = true;
             }
         }
