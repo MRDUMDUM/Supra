@@ -6,11 +6,13 @@ public class ChangeRespawn : MonoBehaviour
 {
 
     public GameObject spawnPoint;
+    public GameObject healthManager;
 
     // Start is called before the first frame update
     void Start()
     {
         spawnPoint = this.gameObject.transform.GetChild(0).gameObject;
+        healthManager = FindObjectOfType<HealthManager>().gameObject;
     }
 
     // Update is called once per frame
@@ -22,8 +24,8 @@ public class ChangeRespawn : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameObject.FindGameObjectWithTag("HealthManager").GetComponent<HealthManager>().respawnPoint = spawnPoint.transform.position;
-            GameObject.FindGameObjectWithTag("HealthManager").GetComponent<HealthManager>().respawnRotation = spawnPoint.transform.rotation;
+            healthManager.GetComponent<HealthManager>().respawnPoint = spawnPoint.transform.position;
+            healthManager.GetComponent<HealthManager>().respawnRotation = spawnPoint.transform.rotation;
         }
     }
 }
