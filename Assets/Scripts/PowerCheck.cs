@@ -18,7 +18,7 @@ public class PowerCheck : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (powerSource.GetComponent<Conductive>().isPowered == true)
         {

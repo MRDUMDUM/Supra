@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class TPS_Puddle : MonoBehaviour
 {
-
-    public GameObject player;
-    public float PlayerFadeDis;
-
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     //Stand in code to be replaced in the future!!!
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-    
-    public bool electricOn = false;
-    public bool StartElectro = false;
 
+    public GameObject player;
+    public float PlayerFadeDis;
+    public int damageToGive = 1;
+    public bool electricOn = false;
+    public bool AlreadyElectro = false;
+    //public bool machineConnected = false;
     float duration = 5f;
     Renderer rend;
     public ParticleSystem electroPar;
 
     public List<GameObject> connected = new List<GameObject>();
+    public GameObject machine;
 
     void Start()
     {
@@ -36,14 +36,19 @@ public class TPS_Puddle : MonoBehaviour
             
             Instantiate(electroPar, transform.position, Quaternion.identity);
             
-            if (StartElectro)
+            if(machine != null)
             {
-                ElectrifiedLink();
+                machine.GetComponent<Conductive>().isPowered = true;
             }
+            
+            ElectrifiedLink();
+            StartCoroutine(TurnOff());
             electricOn = false;
+
         }
 
         RemoveObject();
+        ConnectedCheck();
     }
 
     void ElectrifiedLink()
@@ -51,9 +56,15 @@ public class TPS_Puddle : MonoBehaviour
         
         foreach(GameObject e in connected)
         {
-            e.GetComponent<TPS_Puddle>().electricOn = true;
+            if(e.GetComponent<TPS_Puddle>().AlreadyElectro != true)
+            {
+                e.GetComponent<TPS_Puddle>().electricOn = true;
+                e.GetComponent<TPS_Puddle>().AlreadyElectro = true; 
+            }
+            
         }
-        StartElectro = false;
+       
+        
     }
 
     void RemoveObject()
@@ -71,8 +82,15 @@ public class TPS_Puddle : MonoBehaviour
     {
         if(connected != null)
         {
-
+            foreach (GameObject e in connected)
+            {
+                if (e == null)
+                {
+                    connected.Remove(e);
+                }
+            }
         }
+
     }
 
     private void OnTriggerEnter(Collider col)
@@ -80,9 +98,14 @@ public class TPS_Puddle : MonoBehaviour
         switch (col.transform.tag)
         {
             case "WaterPuddle":
-                col.GetComponent<TPS_Puddle>().connected.Add(this.gameObject);
-                connected.Add(col.gameObject);
+                // col.GetComponent<TPS_Puddle>().connected.Add(this.gameObject);
+                //connected.Add(col.gameObject);
+                if (!connected.Contains(col.gameObject))
+                {
 
+                    connected.Add(col.gameObject);
+
+                }
                 break;
 
             case "Fire":
@@ -92,17 +115,73 @@ public class TPS_Puddle : MonoBehaviour
             case "Electric":
 
                 electricOn = true;
-                StartElectro = true;
+                AlreadyElectro = true;
                 break;
+            case "player":
+                if (electricOn)
+                {
 
 
+                    Vector3 hitDirection = col.transform.position - transform.position;
+                    hitDirection += new Vector3(0, 1, 0);
+                    hitDirection = hitDirection.normalized;
+
+                    FindObjectOfType<HealthManager>().HurtPlayer(damageToGive,hitDirection);
+                }
+
+                break;
             default:
 
                
                 break;
         }
     }
+    
+    
 
-    
-    
+    private void OnTriggerStay(Collider col)
+    {
+        
+        if(col.transform.tag == "WaterPuddle")
+        {
+            if (!connected.Contains(col.gameObject))
+            {
+                
+                connected.Add(col.gameObject);
+
+            }
+
+        }
+
+        if (col.transform.tag == "Player")
+        {
+            if (electricOn)
+            {
+                Vector3 hitDirection = col.transform.position - transform.position;
+                hitDirection += new Vector3(0, 1, 0);
+                hitDirection = hitDirection.normalized;
+                FindObjectOfType<HealthManager>().HurtPlayer(damageToGive, hitDirection);
+            }
+        }
+
+        if (col.transform.tag == "Machine")
+        {
+            machine = col.gameObject;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.transform.tag == "WaterPuddle")
+        {
+            connected.Remove(col.gameObject);
+        }
+    }
+
+    IEnumerator TurnOff()
+    {
+        yield return new WaitForSeconds(1.5f);
+        AlreadyElectro = false;
+    }
 }

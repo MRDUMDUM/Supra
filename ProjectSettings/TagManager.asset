@@ -15,6 +15,8 @@ TagManager:
   - Ice
   - Ground
   - WaterPuddle
+  - Machine
+  - Lava
   layers:
   - Default
   - TransparentFX

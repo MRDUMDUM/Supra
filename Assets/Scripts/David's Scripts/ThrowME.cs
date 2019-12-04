@@ -22,6 +22,7 @@ public class ThrowME : MonoBehaviour
     public LayerMask layerMask;
 
     public static bool canThrow = false;
+    public static bool inRange = false;
 
     public static int elementIndicator;
 
@@ -41,10 +42,21 @@ public class ThrowME : MonoBehaviour
     {
         if (canThrow)
         {
+
             DrawCurve();
             RaycastCurver();
-            this.gameObject.GetComponent<LineRenderer>().enabled = true;
-            targetObject.SetActive(true);
+            if (inRange)
+            {
+                
+                this.gameObject.GetComponent<LineRenderer>().enabled = true;
+                targetObject.SetActive(true);
+            }
+            else
+            {
+                this.gameObject.GetComponent<LineRenderer>().enabled = false;
+                targetObject.SetActive(false);
+            }
+            
         }
         else
         {
@@ -66,19 +78,26 @@ public class ThrowME : MonoBehaviour
             point2.position = placeTargetPoint;
             point3.position = placeTargetPoint;
             target.rotation = Quaternion.FromToRotation(transform.up, hit1.normal) * transform.rotation;
+            inRange = true;
         }
         else
         {
             point2.position = point1.position + (resetPoint1.position - point1.position);
             point3.position = point2.position + (resetPoint2.position - point2.position);
 
-            if (Physics.Raycast(point2.position, point3.position-point2.position, out hit2, 50, layerMask))
+            if (Physics.Raycast(point2.position, point3.position-point2.position, out hit2, 150, layerMask))
             {
                 placeTargetPoint = hit2.point;
                 target.position = placeTargetPoint;
                 point3.position = placeTargetPoint;
                 target.rotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
+                inRange = true;
             }
+            else
+            {
+                inRange = false;
+            }
+            
         }
 
 

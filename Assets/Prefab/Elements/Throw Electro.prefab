@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5992762776238246281}
   - component: {fileID: 5992762776238246282}
   - component: {fileID: 5992762776238246283}
-  - component: {fileID: 5992762776238246292}
+  - component: {fileID: 6053722587448751811}
+  - component: {fileID: 1530783047319616009}
   m_Layer: 11
   m_Name: Throw Electro
   m_TagString: Electric
@@ -93,7 +94,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5992762776238246292
+--- !u!114 &6053722587448751811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5992762776238246293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96a82b14bcec834dbfc809a7c4ae821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electroPar: {fileID: 4667388504753536553, guid: affaf137f76b5b243bd1a1a67f0c032e,
+    type: 3}
+--- !u!54 &1530783047319616009
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,7 +119,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

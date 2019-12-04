@@ -7,6 +7,7 @@ public class WaterElement : MonoBehaviour
 {
   
     public GameObject WaterPudle;
+    public GameObject lavaPlatform;
 
 
     public float pudleScale = 1.0f;
@@ -31,14 +32,14 @@ public class WaterElement : MonoBehaviour
     {
 
 
-        Debug.Log("sker der noget?");
+       
         switch (collision.transform.tag)
         {
             case "Fire":
                 break;
 
-            case "Ground":
-                Instantiate(WaterPudle, this.transform.position, Quaternion.identity);
+            case "Lava":
+                Instantiate(lavaPlatform, this.transform.position, Quaternion.identity);
                 ThrowME.ball = null;
                 Destroy(this.gameObject);
                 break;
@@ -52,45 +53,5 @@ public class WaterElement : MonoBehaviour
         }
     }
 
-    //void WaterPudleRay()
-    //{
-    //    Ray ray = new Ray(transform.position, Vector3.down);
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(ray, out hit, 100, layerMask))
-    //    {
-
-    //        Vector3 leftVec = Vector3.Cross(hit.normal, Vector3.up);
-    //        float randScale = Random.Range(0.5f, 1.5f);
-
-    //        GameObject newSplatObject = new GameObject();
-    //        newSplatObject.transform.position = hit.point;
-    //        if (leftVec.magnitude > 0.001f)
-    //        {
-    //            newSplatObject.transform.rotation = Quaternion.LookRotation(leftVec, hit.normal);
-    //        }
-    //        newSplatObject.transform.RotateAround(hit.point, hit.normal, Random.Range(-180, 180));
-    //        newSplatObject.transform.localScale = new Vector3(randScale, randScale * 0.5f, randScale) * pudleScale;
-
-    //        Splat newSplat;
-    //        newSplat.splatMatrix = newSplatObject.transform.worldToLocalMatrix;
-    //        newSplat.channelMask = channelMask;
-
-    //        float splatscaleX = 1.0f / splatsX;
-    //        float splatscaleY = 1.0f / splatsY;
-    //        float splatsBiasX = Mathf.Floor(Random.Range(0, splatsX * 0.99f)) / splatsX;
-    //        float splatsBiasY = Mathf.Floor(Random.Range(0, splatsY * 0.99f)) / splatsY;
-
-    //        newSplat.scaleBias = new Vector4(splatscaleX, splatscaleY, splatsBiasX, splatsBiasY);
-
-    //        SplatManagerSystem.instance.AddSplat(newSplat);
-    //        Debug.Log("YAA");
-    //        GameObject.Destroy(newSplatObject);
-
-    //    }
-    //    else
-    //    {
-    //        Destroy(this.gameObject);
-    //    }
-    //}
 
 }

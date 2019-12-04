@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     private int currentJump = 0;
     private Vector3 moveDirection;
 
+    public float knockBackForce;
+    public float knockBackTime;
+    private float knockBackCounter;
+
     //Animation
     public Animator anim;
     public Transform pivot;
@@ -79,64 +83,71 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * slopeForceRayLenght, Color.yellow);
         // moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
         // Debug.Log("currentJump" + currentJump);
-        float yStore = moveDirection.y;
 
-        moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal") );
-        if (!aming)
+        if (knockBackCounter <= 0)
         {
-            moveDirection = moveDirection.normalized * moveSpeed;
+            float yStore = moveDirection.y;
+
+            moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
+            if (!aming)
+            {
+                moveDirection = moveDirection.normalized * moveSpeed;
+            }
+            else
+            {
+                moveDirection = moveDirection.normalized * (moveSpeed - aimSpeedReduction);
+            }
+
+            moveDirection.y = yStore;
+
+            //isGrounded = Vector3.Angle(Vector3.up, hitNormal) <= controller.slopeLimit;
+
+            if (controller.isGrounded)
+            {
+                currentJump = 0;
+                moveDirection.y = 0f;
+                if (Input.GetButtonDown("Jump"))
+                {
+                    moveDirection.y = jumpForce;
+                    currentJump++;
+                }
+
+            }
+            else
+            {
+
+                //switch statemant ensures that if a player walks over a edge they dont get two jumps but only one jump triggers
+                switch (currentJump)
+                {
+                    case 0:
+                        if (maxJump > currentJump)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                moveDirection.y = jumpForce;
+                                currentJump = 2;
+                                anim.SetTrigger("DubleJump");
+                            }
+                        }
+                        break;
+                    case 1:
+                        if (maxJump > currentJump)
+                        {
+                            if (Input.GetButtonDown("Jump"))
+                            {
+                                moveDirection.y = jumpForce;
+                                currentJump++;
+                                anim.SetTrigger("DubleJump");
+                            }
+                        }
+                        break;
+                }
+            }
         }
         else
         {
-            moveDirection = moveDirection.normalized * (moveSpeed - aimSpeedReduction);
+            knockBackCounter -= Time.deltaTime;
         }
-        
-        moveDirection.y = yStore;
-
-        //isGrounded = Vector3.Angle(Vector3.up, hitNormal) <= controller.slopeLimit;
-
-        if (controller.isGrounded)
-        {
-            currentJump = 0;
-            moveDirection.y = 0f;
-            if (Input.GetButtonDown("Jump"))
-            {
-                moveDirection.y = jumpForce;
-                currentJump++;
-            }
-
-        }
-        else
-        {
-            
-            //switch statemant ensures that if a player walks over a edge they dont get two jumps but only one jump triggers
-            switch (currentJump)
-            {
-                case 0:
-                    if (maxJump > currentJump)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            moveDirection.y = jumpForce;
-                            currentJump=2;
-                            anim.SetTrigger("DubleJump");
-                        }
-                    }
-                    break;
-                case 1:
-                    if (maxJump > currentJump)
-                    {
-                        if (Input.GetButtonDown("Jump"))
-                        {
-                            moveDirection.y = jumpForce;
-                            currentJump++;
-                            anim.SetTrigger("DubleJump");
-                        }
-                    }
-                    break;
-            }
-        }
-
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // have to rework this so player can hold jump buttom for a soomth jump
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -200,6 +211,14 @@ public class PlayerController : MonoBehaviour
     public void AimingControl()
     {
 
+    }
+
+    public void KnockBack(Vector3 direction)
+    {
+        knockBackCounter = knockBackTime;
+       
+        moveDirection = direction * knockBackForce;
+         moveDirection.y += knockBackForce;
     }
 }
 
