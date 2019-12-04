@@ -161,7 +161,7 @@ public class ThrowME : MonoBehaviour
         ElementToThrow();
         ball.position = point1.position;
         
-        float targetDistance = Vector3.Distance(ball.position, target.position);
+        float targetDistance = Vector3.Distance(ball.position, target.position - new Vector3(0,3,0));
 
         // Calculate the velocity needed to throw the object to the target at specified angle.
         float ballVelocity = targetDistance / (Mathf.Sin(2 * fireAngle * Mathf.Deg2Rad) / gravity);

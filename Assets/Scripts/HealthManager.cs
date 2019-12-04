@@ -17,12 +17,18 @@ public class HealthManager : MonoBehaviour
     private float flashCounter;
     public float flashLength = 0.1f;
 
+    private bool isRespawning;
+    private Vector3 respawnPoint;
+    public float respawnlegth;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
 
         playerControl = FindObjectOfType<PlayerController>();
+
+        respawnPoint = playerControl.transform.position;
     }
 
     // Update is called once per frame
@@ -54,21 +60,45 @@ public class HealthManager : MonoBehaviour
         {
 
             currentHealth -= damage;
-            playerControl.KnockBack(direction);
 
-            invincibilityCounter = invincibilityLength;
+            if(currentHealth <= 0)
+            {
+                Respawn();
+            }
+            else
+            {
+                playerControl.KnockBack(direction);
 
-            playerRenderer.enabled = false;
+                invincibilityCounter = invincibilityLength;
 
-            flashCounter = flashLength;
+                playerRenderer.enabled = false;
+
+                flashCounter = flashLength;
+            }
+
+            
         }
 
     }
 
-    //
+
+
+    //when the player hits lava
     public void HurtPlayerLava()
     {
 
+    }
+
+
+    public void Respawn()
+    {
+        //playerControl.transform.position = respawnPoint;
+        //currentHealth = maxHealth;
+        if (!isRespawning)
+        {
+            StartCoroutine(RespawnCorutine());
+        }
+        
     }
 
     public void HealPlayer(int heal)
@@ -80,10 +110,11 @@ public class HealthManager : MonoBehaviour
         }
     }
 
-    public void respawn()
+
+    public IEnumerator RespawnCorutine()
     {
-        playerControl.transform.position = respawnPoint.transform.position;
+        isRespawning = true;
+        yield return new WaitForSeconds(respawnlegth);
+        isRespawning = false;
     }
-
-
 }
