@@ -115,7 +115,18 @@ public class HealthManager : MonoBehaviour
     public IEnumerator RespawnCorutine()
     {
         isRespawning = true;
+        playerControl.gameObject.SetActive(false);
+
         yield return new WaitForSeconds(respawnlegth);
         isRespawning = false;
+
+        playerControl.gameObject.SetActive(true);
+        playerControl.transform.position = respawnPoint;
+        currentHealth = maxHealth;
+
+        invincibilityCounter = invincibilityLength;
+        playerRenderer.enabled = false;
+
+        flashCounter = flashLength;
     }
 }
