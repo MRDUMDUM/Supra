@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 4203849692232956768}
   - component: {fileID: -2632934051441199991}
   - component: {fileID: 324530627}
-  - component: {fileID: 324530628}
+  - component: {fileID: 1573975863}
+  - component: {fileID: 1573975864}
   m_Layer: 10
   m_Name: AI Water
   m_TagString: Water
@@ -34,7 +35,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6, y: 0, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5534009667282176019}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -164,7 +166,23 @@ MonoBehaviour:
   wanderRadius: 10
   wanderTimer: 3
   speed: 18
---- !u!195 &324530628
+--- !u!114 &1573975863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2609492422599644298}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e4cb42c1b45bf4baca4a772ad1d394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fleeRadius: 4
+  wanderRadius: 10
+  wanderTimer: 3
+  speed: 18
+--- !u!195 &1573975864
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,3 +204,88 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1001 &2967500191164281094
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2609492422599645047}
+    m_Modifications:
+    - target: {fileID: 7341551062768072986, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_Name
+      value: Floating Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102709817479618975, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_Text
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102709817479618975, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+        type: 3}
+      propertyPath: m_Color.rgba
+      value: 4294940528
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b, type: 3}
+--- !u!4 &5534009667282176019 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7341551062768072981, guid: 095a0a4c3e63a464ba2a1a1fe2bba70b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2967500191164281094}
+  m_PrefabAsset: {fileID: 0}
