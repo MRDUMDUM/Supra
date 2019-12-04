@@ -17,6 +17,7 @@ TagManager:
   - WaterPuddle
   - Machine
   - Lava
+  - HealthManager
   layers:
   - Default
   - TransparentFX

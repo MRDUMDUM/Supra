@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-
+    public GameObject respawnPoint;
     public int maxHealth;
     public int currentHealth;
 
@@ -42,6 +42,7 @@ public class HealthManager : MonoBehaviour
 
             if(invincibilityCounter <= 0)
             {
+                respawn();
                 playerRenderer.enabled = true;
             }
         }
@@ -78,4 +79,11 @@ public class HealthManager : MonoBehaviour
             currentHealth = maxHealth;
         }
     }
+
+    public void respawn()
+    {
+        playerControl.transform.position = respawnPoint.transform.position;
+    }
+
+
 }
