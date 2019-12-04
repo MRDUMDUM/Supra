@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ElementSpawner : MonoBehaviour {
 
+
+    public GameObject fire, water, lightning;
+    string fireTag, waterTag, lightningTag;
+    GameObject[] fireElements, waterElements, lightningElements;
+    public int currentFire, currentWater, currentLightning;
+
     public BoxCollider spawnArea; // The area of which the elements should be in
     public float respawnCheckTimer; // How often to check for amount of elements alive
 
@@ -20,6 +26,9 @@ public class ElementSpawner : MonoBehaviour {
     private void Awake()
     {
         elementType = elementToSpawn.tag; // Set the type of element equal to the Tag (e.g. "Frost")
+        fireTag = fire.tag;
+        waterTag = water.tag;
+        lightningTag = lightning.tag;
     }
 
     void Start() {
@@ -44,15 +53,45 @@ public class ElementSpawner : MonoBehaviour {
                 {
                     elements = GameObject.FindGameObjectsWithTag(elementType); // Find all objects with corresponding Tag
 
+
+                    //Daniel code starts here. try to do the same as above but with more. 
+                    fireElements = GameObject.FindGameObjectsWithTag(fireTag);
+                    waterElements = GameObject.FindGameObjectsWithTag(waterTag);
+                    lightningElements = GameObject.FindGameObjectsWithTag(lightningTag);
+
+
                     foreach (GameObject element in elements) // Go through list of the found elements with corresponding Tag
                     {
                         curElements++; // and increment curElements for each one
                     }
+                    foreach (GameObject element in fireElements) // Go through list of the found elements with corresponding Tag
+                    {
+                        currentFire++; // and increment curElements for each one
+                    }
+                    foreach (GameObject element in waterElements) // Go through list of the found elements with corresponding Tag
+                    {
+                        currentWater++; // and increment curElements for each one
+                    }
+                    foreach (GameObject element in lightningElements) // Go through list of the found elements with corresponding Tag
+                    {
+                        currentLightning++; // and increment curElements for each one
+                    }
 
-
+                    if (currentFire< maxElements) // if less alive than max alive
+                    {
+                        respawnElements(fire); // Spawn one!
+                    }
+                    if (currentWater < maxElements) // if less alive than max alive
+                    {
+                        respawnElements(water); // Spawn one!
+                    }
+                    if (currentLightning < maxElements) // if less alive than max alive
+                    {
+                        respawnElements(lightning); // Spawn one!
+                    }
                     if (curElements < maxElements) // if less alive than max alive
                     {
-                        respawnElements(); // Spawn one!
+                        respawnElements(elementToSpawn); // Spawn one!
                     }
                     else
                     {
@@ -62,6 +101,14 @@ public class ElementSpawner : MonoBehaviour {
                     // Reset the list of elements found
                     elements = null;
                     curElements = 0;
+
+                    fireElements = null;
+                    waterElements = null;
+                    lightningElements = null;
+
+                    currentFire = 0;
+                    currentWater = 0;
+                    currentLightning = 0;
                 }
             }
             else // Player not inside SpawnArea 
@@ -73,8 +120,10 @@ public class ElementSpawner : MonoBehaviour {
         }
     }
 
-    void respawnElements()
+    void respawnElements(GameObject element)
     {   // Basically creates a clone of the "elementToSpawn" GameObject; inherits scripts and components!
-        Instantiate(elementToSpawn, this.transform.position, this.transform.rotation);
+        Instantiate(element, this.transform.position, this.transform.rotation);
+
+
     }
 }

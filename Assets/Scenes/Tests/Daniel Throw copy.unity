@@ -718,7 +718,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292889862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
   m_Speed: 3.5
@@ -1803,13 +1803,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d28a14d4354dd0c468ced940bed91750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
   maxHealth: 5
   currentHealth: 0
   playerControl: {fileID: 0}
   invincibilityLength: 1
   playerRenderer: {fileID: 1634207816}
   flashLength: 0.1
+  respawnPoint: {x: 0, y: 0, z: 0}
+  respawnRotation: {x: 0, y: 0, z: 0, w: 0}
+  respawnlegth: 0
 --- !u!1001 &682048096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4482,8 +4484,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad30f4192a6d81041b1ebc3680e6bba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fire: {fileID: 4664260385685269368, guid: 5c94de2e6afa419489dd1ed156530c33, type: 3}
+  water: {fileID: 2609492422599644298, guid: 07d3f4fa4020454489ef0f5bac64d5a7, type: 3}
+  lightning: {fileID: 5992762776238246293, guid: fea044cbc86571649b0c25df6ad95f66,
+    type: 3}
+  currentFire: 0
+  currentWater: 0
+  currentLightning: 0
   spawnArea: {fileID: 1590694132}
-  respawnCheckTimer: 5
+  respawnCheckTimer: 1
   elementToSpawn: {fileID: 2609492422599644298, guid: 07d3f4fa4020454489ef0f5bac64d5a7,
     type: 3}
   spawnParticle: {fileID: 0}
