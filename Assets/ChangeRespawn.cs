@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ChangeRespawn : MonoBehaviour
 {
-
-    public GameObject spawnPoint;
-    public GameObject healthManager;
+    private GameObject spawnPoint;
+    private GameObject healthManager;
 
     // Start is called before the first frame update
     void Start()

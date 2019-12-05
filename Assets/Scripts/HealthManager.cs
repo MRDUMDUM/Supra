@@ -21,6 +21,7 @@ public class HealthManager : MonoBehaviour
     public Vector3 respawnPoint;
     public Quaternion respawnRotation;
     public float respawnlegth;
+    public ParticleSystem deathParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,7 @@ public class HealthManager : MonoBehaviour
 
             if(invincibilityCounter <= 0)
             {
-                Respawn();
+                
                 playerRenderer.enabled = true;
             }
         }
@@ -116,7 +117,7 @@ public class HealthManager : MonoBehaviour
     {
         isRespawning = true;
         playerControl.gameObject.SetActive(false);
-
+        Instantiate(deathParticle, playerControl.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(respawnlegth);
         isRespawning = false;
 

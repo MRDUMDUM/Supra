@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public float slopeForce;
     public float slopeForceRayLenght;
+
+    public float textureRayLenght;
 
     public CharacterController controller;
     public float jumpForce;
@@ -47,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     protected bool m_Respawning; //is respawning?
 
+
+    public string surface;
     // Use this for initialization
     void Awake()
     {
@@ -77,9 +82,25 @@ public class PlayerController : MonoBehaviour
        
     }
 
+    public void CheckTEX()
+    {
+        RaycastHit tex;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out tex, controller.height / 2 * slopeForceRayLenght))
+        {
+            if(tex.transform.GetComponent<Renderer>().sharedMaterial.mainTexture.name == null)
+            {
+               
+            }
+            else { surface = tex.transform.GetComponent<Renderer>().sharedMaterial.mainTexture.name; }
+            
+
+        }
+    }
     // Update is called once per frame
     void Update()
     {
+       
         Debug.DrawRay(transform.position, Vector3.down * slopeForceRayLenght, Color.yellow);
         // moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
         // Debug.Log("currentJump" + currentJump);
@@ -220,6 +241,9 @@ public class PlayerController : MonoBehaviour
         moveDirection = direction * knockBackForce;
          moveDirection.y += knockBackForce;
     }
+
+    
+    
 }
 
 
