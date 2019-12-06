@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4664260385685269364}
   - component: {fileID: 4664260385685269365}
   - component: {fileID: 4664260385685269370}
+  - component: {fileID: -3704871446860149399}
   - component: {fileID: 1621852347}
   - component: {fileID: 1621852348}
   m_Layer: 10
@@ -112,6 +113,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-3704871446860149399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4664260385685269368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49843197ecbf3934eb0b97eb29632804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &1621852347
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -119,7 +132,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4664260385685269368}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
   m_Speed: 3.5
@@ -141,7 +154,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4664260385685269368}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94e4cb42c1b45bf4baca4a772ad1d394, type: 3}
   m_Name: 

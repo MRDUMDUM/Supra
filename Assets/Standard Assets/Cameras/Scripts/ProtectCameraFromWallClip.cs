@@ -14,6 +14,7 @@ namespace UnityStandardAssets.Cameras
         public bool protecting { get; private set; }    // used for determining if there is an object between the target and the camera
         public string dontClipTag = "Player";           // don't clip against objects with this tag (useful for not clipping against the targeted object)
         public string dontClipPlatform = "NPC";
+        public string dontClipPlayerStuff = "Weapon";
 
         private Transform m_Cam;                  // the transform of the camera
         private Transform m_Pivot;                // the point at which the camera pivots around
@@ -57,7 +58,9 @@ namespace UnityStandardAssets.Cameras
             {
                 if ((!cols[i].isTrigger) &&
                     !(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipTag)) &&
-                    !(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipPlatform)))
+                    !(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipPlatform)) &&
+                    !(cols[i].attachedRigidbody != null && cols[i].attachedRigidbody.CompareTag(dontClipPlayerStuff))
+                    )
                 {
                     initialIntersect = true;
                     break;

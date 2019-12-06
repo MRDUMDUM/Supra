@@ -40,11 +40,11 @@ public class AIPlatform : MonoBehaviour {
         {
 
             hitCol.enabled = false;
-            ragdollCol.enabled = true;
+            //ragdollCol.enabled = true;
         }
         else
         {
-            ragdollCol.enabled = false;
+            //ragdollCol.enabled = false;
             hitCol.enabled = true;
         }
 

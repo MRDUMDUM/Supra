@@ -101,7 +101,7 @@ public class RayPickUp : MonoBehaviour {
             }
             if (Platform.CompareTag("NPC"))
             {
-                if (Platform.GetComponent<AIPlatform>().isSleeping == true || Platform.GetComponent<FireNPC>().isSleeping == true)
+                if (Platform.GetComponent<AIPlatform>().isSleeping == true)
                 {
                     if (inRange)
                     {
@@ -171,11 +171,17 @@ public class RayPickUp : MonoBehaviour {
                     }
                     else
                     {
+                        //throws the element
                         if (Input.GetMouseButtonDown(0))
                         {
                             ThrowElement();
                         }
 
+                        //go back to walking
+                        if (Input.GetMouseButtonDown(1))
+                        {
+                            AimToWalk();
+                        }
                         //if(Input.GetButtonDown)
 
                     }
@@ -277,6 +283,13 @@ public class RayPickUp : MonoBehaviour {
         aiming = false;
         carrying = false;
         Debug.Log("YEEEET");
+    }
+
+    void AimToWalk()
+    {
+        aiming = false;
+        PlayerController.aming = false;
+        ThrowME.canThrow = false;
     }
 
     void placementTracker()

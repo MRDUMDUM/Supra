@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5992762776238246292}
   - component: {fileID: 471357298}
   - component: {fileID: 471357299}
+  - component: {fileID: 4593853456663623777}
   m_Layer: 10
   m_Name: AI Electro
   m_TagString: Electric
@@ -119,7 +120,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5992762776238246293}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
   m_Speed: 3.5
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5992762776238246293}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94e4cb42c1b45bf4baca4a772ad1d394, type: 3}
   m_Name: 
@@ -150,6 +151,20 @@ MonoBehaviour:
   wanderRadius: 10
   wanderTimer: 3
   speed: 18
+--- !u!114 &4593853456663623777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5992762776238246293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96a82b14bcec834dbfc809a7c4ae821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electroPar: {fileID: 4667388504753536553, guid: affaf137f76b5b243bd1a1a67f0c032e,
+    type: 3}
 --- !u!1001 &2717796500408765101
 PrefabInstance:
   m_ObjectHideFlags: 0

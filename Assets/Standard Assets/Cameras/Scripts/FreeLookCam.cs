@@ -29,11 +29,7 @@ namespace UnityStandardAssets.Cameras
 		private Quaternion m_PivotTargetRot;
 		private Quaternion m_TransformTargetRot;
 
-        [Header("Aiming valuables")]
-        public Vector3 playerOffset;
-        public float distanceFromOffset;
-        public Transform rotator;
-
+       
         protected override void Awake()
         {
             base.Awake();

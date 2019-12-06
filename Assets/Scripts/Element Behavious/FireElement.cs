@@ -23,6 +23,7 @@ public class FireElement : MonoBehaviour
         Debug.Log("sker der noget?");
         switch (collision.transform.tag)
         {
+
             case "Water":
                 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
                 //Stand in code to be replaced in the future!!!

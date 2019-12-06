@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3916963293774537328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3916963293774537333}
+  - component: {fileID: 3916963293774537334}
+  - component: {fileID: 3916963293774537335}
+  - component: {fileID: 3916963293774537332}
+  m_Layer: 12
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3916963293774537333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916963293774537328}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 53.52, y: 11.84, z: 2}
+  m_LocalScale: {x: 302.10596, y: 60.58963, z: 279.86957}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3916963293774537334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916963293774537328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad30f4192a6d81041b1ebc3680e6bba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fire: {fileID: 4664260385685269368, guid: 5c94de2e6afa419489dd1ed156530c33, type: 3}
+  water: {fileID: 2609492422599644298, guid: 07d3f4fa4020454489ef0f5bac64d5a7, type: 3}
+  lightning: {fileID: 5992762776238246293, guid: fea044cbc86571649b0c25df6ad95f66,
+    type: 3}
+  currentFire: 0
+  currentWater: 0
+  currentLightning: 0
+  spawnArea: {fileID: 3916963293774537335}
+  respawnCheckTimer: 5
+  elementToSpawn: {fileID: 2609492422599644298, guid: 07d3f4fa4020454489ef0f5bac64d5a7,
+    type: 3}
+  spawnParticle: {fileID: 0}
+  maxElements: 3
+--- !u!65 &3916963293774537335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916963293774537328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3916963293774537332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3916963293774537328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8532345e4fb4019438f875f88fd6ffa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerColliding: 0

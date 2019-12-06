@@ -17,6 +17,7 @@ public class TPS_Puddle : MonoBehaviour
     float duration = 5f;
     Renderer rend;
     public ParticleSystem electroPar;
+    public ParticleSystem DAmp;
 
     public List<GameObject> connected = new List<GameObject>();
     public GameObject machine;
@@ -130,10 +131,18 @@ public class TPS_Puddle : MonoBehaviour
                 }
 
                 break;
+            
             default:
 
                
                 break;
+
+        }
+
+        if(col.gameObject.layer == LayerMask.NameToLayer("Platform"))
+        {
+
+            col.gameObject.GetComponentInParent<AIPlatform>().WakeUp();
         }
     }
     
@@ -167,6 +176,11 @@ public class TPS_Puddle : MonoBehaviour
         if (col.transform.tag == "Machine")
         {
             machine = col.gameObject;
+        }
+
+        if (col.gameObject.layer == LayerMask.NameToLayer("Platform"))
+        {
+            col.gameObject.GetComponent<AIPlatform>().WakeUp();
         }
 
     }

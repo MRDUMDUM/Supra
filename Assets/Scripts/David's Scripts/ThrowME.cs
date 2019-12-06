@@ -38,7 +38,7 @@ public class ThrowME : MonoBehaviour
         lineRenderer.positionCount = numPoints;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (canThrow)
         {
