@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2609492422599644297}
   - component: {fileID: 2609492422599644296}
   - component: {fileID: 4203849692232956768}
-  - component: {fileID: 6583128575844687569}
+  - component: {fileID: 3500244677959620644}
   m_Layer: 11
   m_Name: Throw Water
   m_TagString: Water
@@ -114,7 +114,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!54 &6583128575844687569
+--- !u!54 &3500244677959620644
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,4 +129,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

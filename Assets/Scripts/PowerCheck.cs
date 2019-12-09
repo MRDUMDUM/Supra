@@ -10,6 +10,10 @@ public class PowerCheck : MonoBehaviour
     public GameObject powerSource;
     private bool checker;
     public float speedMod = 5.0f;
+
+    public bool moveOnce = false;
+    private bool endReached = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,10 +26,8 @@ public class PowerCheck : MonoBehaviour
     {
         if (powerSource.GetComponent<Conductive>().isPowered == true)
         {
-            Powered = true;
-            if (Powered == true)
+            if (!moveOnce)
             {
-
                 if (checker == true)
                 {
                     gameObject.transform.position = Vector3.MoveTowards(transform.position, point2.transform.position, speedMod*Time.deltaTime);
@@ -41,9 +43,31 @@ public class PowerCheck : MonoBehaviour
                         checker = true;
                     }
                 }
-
-                
             }
+            else
+            {
+
+                if (!endReached)
+                {
+                    gameObject.transform.position = Vector3.MoveTowards(transform.position, point2.transform.position, speedMod * Time.deltaTime);
+                    if (gameObject.transform.position == point2.transform.position)
+                    {
+                        endReached = true;
+                    }
+                }
+                else
+                {
+                    gameObject.transform.position = Vector3.MoveTowards(transform.position, point1.transform.position, speedMod * Time.deltaTime);
+                    if (gameObject.transform.position == point1.transform.position)
+                    {
+                        endReached = false;
+                        powerSource.GetComponent<Conductive>().isPowered = false;
+                    }
+                }
+
+
+            }
+
         }
     }
 }

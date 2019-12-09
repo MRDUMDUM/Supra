@@ -51,13 +51,13 @@ namespace RootMotion.Demos {
 
 			// IK procedures, make sure this updates AFTER the camera is moved/rotated
 			// Sample something from the current pose of the character
-			Read();
+			//Read();
 
 			// AimIK pass
 			AimIK();
 			
 			// FBBIK pass - put the left hand back to where it was relative to the right hand before AimIK solved
-			FBBIK();
+			//FBBIK();
 			
 			// Rotate the head to look at the aim target
 			HeadLookAt(aimTarget);

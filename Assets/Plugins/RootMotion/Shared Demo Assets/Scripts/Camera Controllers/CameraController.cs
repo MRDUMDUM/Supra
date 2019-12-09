@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace RootMotion {
 
@@ -112,8 +113,8 @@ namespace RootMotion {
 
 			// delta rotation
 			if (rotate) {
-				x += Input.GetAxis("Mouse X") * rotationSensitivity;
-				y = ClampAngle(y - Input.GetAxis("Mouse Y") * rotationSensitivity, yMinLimit, yMaxLimit);
+				x += CrossPlatformInputManager.GetAxis("Mouse X") * rotationSensitivity;
+				y = ClampAngle(y - CrossPlatformInputManager.GetAxis("Mouse Y") * rotationSensitivity, yMinLimit, yMaxLimit);
 			}
 
 			// Distance

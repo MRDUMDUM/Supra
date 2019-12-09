@@ -32,7 +32,7 @@ TagManager:
   - Element
   - ThrowElement
   - SpawnArea
-  - 
+  - IgnoreRay
   - 
   - 
   - 

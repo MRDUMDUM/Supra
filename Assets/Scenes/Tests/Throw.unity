@@ -620,10 +620,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2506816006132646173, guid: a10a450d6cc31844bab855e2546fc46d,
+        type: 3}
+      propertyPath: pivot
+      value: 
+      objectReference: {fileID: 1678305334}
     - target: {fileID: 2506816006132646169, guid: a10a450d6cc31844bab855e2546fc46d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -52.1
+      value: -52.13
       objectReference: {fileID: 0}
     - target: {fileID: 2506816006132646169, guid: a10a450d6cc31844bab855e2546fc46d,
         type: 3}
@@ -675,11 +680,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2506816006132646173, guid: a10a450d6cc31844bab855e2546fc46d,
-        type: 3}
-      propertyPath: pivot
-      value: 
-      objectReference: {fileID: 1678305334}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a10a450d6cc31844bab855e2546fc46d, type: 3}
 --- !u!1 &378452814 stripped

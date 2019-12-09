@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4664260385685269364}
   - component: {fileID: 4664260385685269365}
   - component: {fileID: 4861354863782741476}
-  - component: {fileID: 747465977495188478}
+  - component: {fileID: 451770097797175001}
   m_Layer: 11
   m_Name: Throw Fire
   m_TagString: Fire
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49843197ecbf3934eb0b97eb29632804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &747465977495188478
+--- !u!54 &451770097797175001
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,4 +121,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

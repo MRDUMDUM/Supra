@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7419177217351099782}
   - component: {fileID: 904140968847073493}
   - component: {fileID: 1959364539}
-  m_Layer: 4
+  m_Layer: 13
   m_Name: Waterpudle
   m_TagString: WaterPuddle
   m_Icon: {fileID: 0}
@@ -109,10 +109,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   PlayerFadeDis: 300
+  damageToGive: 1
   electricOn: 0
   AlreadyElectro: 0
   electroPar: {fileID: 4667388504753536553, guid: affaf137f76b5b243bd1a1a67f0c032e,
     type: 3}
+  DAmp: {fileID: 0}
   connected: []
   machine: {fileID: 0}
 --- !u!54 &1959364539

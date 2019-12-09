@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a17a7dd5538e584795815ca5d45569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPowered: 1
+  isPowered: 0
   conductive: 1
 --- !u!1001 &6955559206200565932
 PrefabInstance:

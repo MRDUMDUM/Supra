@@ -22,6 +22,8 @@ public class TPS_Puddle : MonoBehaviour
     public List<GameObject> connected = new List<GameObject>();
     public GameObject machine;
 
+    public bool placedInGame = false;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -48,7 +50,9 @@ public class TPS_Puddle : MonoBehaviour
 
         }
 
-        RemoveObject();
+        if(!placedInGame)
+            RemoveObject();
+
         ConnectedCheck();
     }
 
@@ -110,7 +114,7 @@ public class TPS_Puddle : MonoBehaviour
                 break;
 
             case "Fire":
-
+                Destroy(col.gameObject);
                 Destroy(this.gameObject);
                 break;
             case "Electric":

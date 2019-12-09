@@ -6,9 +6,10 @@ using UnityStandardAssets.Cameras;
 public class PlatformAttach : MonoBehaviour
 {
     //public GameObject Player;
-    public GameObject Camera;
+    public FreeLookCam Camera;
     private void Start()
     {
+        Camera = FindObjectOfType<FreeLookCam>();
         //Player = GameObject.FindGameObjectWithTag("Player");
     }
 

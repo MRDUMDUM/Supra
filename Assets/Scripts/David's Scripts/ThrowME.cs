@@ -171,7 +171,7 @@ public class ThrowME : MonoBehaviour
         float Vy = Mathf.Sqrt(ballVelocity) * Mathf.Sin(fireAngle * Mathf.Deg2Rad);
 
         //flight time
-        float flightDuration = targetDistance / Vx;
+        float flightDuration = (targetDistance / Vx);
 
         //Rotate towards the target
         ball.rotation = Quaternion.LookRotation(target.position - ball.position);
