@@ -1661,7 +1661,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4915664386860150429}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 10
   m_Drag: 0.01
   m_AngularDrag: 0.1
   m_UseGravity: 0
@@ -2375,7 +2375,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 68a7b1a3a722ddf44a4a295d6451a62a, type: 2}
-  - {fileID: -984441713922531870, guid: 82fa4d2a4ac1247408bb080535df5e5f, type: 3}
+  - {fileID: 2100000, guid: 28ca692b9e8fcd346bdb43ee1a71c696, type: 2}
   - {fileID: 2100000, guid: 0298cc5bb86adac44bf72f7753dd97ef, type: 2}
   - {fileID: 2100000, guid: 0b7988e2640d88e4c9c65af4dda987cf, type: 2}
   m_StaticBatchInfo:

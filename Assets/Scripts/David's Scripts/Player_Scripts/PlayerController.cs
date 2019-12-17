@@ -130,7 +130,11 @@ public class PlayerController : MonoBehaviour
         {
             float yStore = moveDirection.y;
 
+            
             moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
+  
+
+            Debug.Log("vertical movement: " + Input.GetAxis("Vertical"));
 
             if (!aming)
             {
